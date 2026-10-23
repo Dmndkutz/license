@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DMND KUTZ License Upload</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 40 40%22%3E%3Cpath d=%22M20 2 38 20 20 38 2 20Z%22 fill=%22%23ED1C24%22/%3E%3C/svg%3E">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@700&display=swap">
+<style>
+:root {
+  --bg: #0B0B0C; --surface: #151517; --ink: #F3F3F4; --muted: #A3A5AA; --line: #2E2F33;
+  --red: #ED1C24; --silver: #BDBEC0; --ok: #4CC97A; --err: #FF6B70;
+  --display: "Archivo Black", "Arial Black", Impact, sans-serif;
+  --body: "Barlow", "Helvetica Neue", Arial, sans-serif;
+  --label: "Barlow Condensed", "Arial Narrow", Arial, sans-serif;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 17px; line-height: 1.45; }
+.wrap { max-width: 520px; margin: 0 auto; padding: 28px 18px 48px; display: grid; gap: 22px; }
+.top { display: flex; gap: 12px; align-items: center; }
+.top svg { width: 38px; height: 38px; flex: none; }
+.brand { font-family: var(--display); font-size: 24px; line-height: 1; letter-spacing: .02em; }
+.brand span { color: var(--red); }
+h1 { font-family: var(--display); font-size: 28px; line-height: 1.1; margin: 0; }
+.lead { color: var(--muted); margin: 6px 0 0; }
+form { display: grid; gap: 18px; }
+.field { display: grid; gap: 6px; }
+.field > label:not(.pick), .lbl { font-family: var(--label); font-size: 15px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--silver); }
+input[type=text], input[type=date], select {
+  width: 100%; font: inherit; color: var(--ink); background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 13px 14px; min-height: 50px;
+}
+input:focus, select:focus, button:focus-visible, .pick:focus-within { outline: 2px solid var(--red); outline-offset: 1px; }
+.hint { font-size: 14px; color: var(--muted); }
+.seg { display: grid; grid-template-columns: 1fr 1fr 1fr; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 4px; gap: 4px; }
+.seg input { position: absolute; opacity: 0; pointer-events: none; }
+.seg label { text-align: center; padding: 11px 6px; border-radius: 6px; color: var(--muted); cursor: pointer; font-size: 16px; }
+.seg input:checked + label { background: var(--ink); color: var(--bg); }
+.pick { position: relative; display: grid; place-items: center; gap: 6px; text-align: center; border: 2px dashed var(--line); border-radius: 10px; padding: 22px 14px; background: var(--surface); cursor: pointer; }
+.pick input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+.pick b { font-size: 18px; }
+.pick.has { border-style: solid; border-color: var(--ok); }
+.pick img { max-width: 100%; max-height: 220px; border-radius: 6px; }
+button[type=submit] { font: inherit; font-weight: 700; font-size: 18px; color: #fff; background: var(--red); border: 0; border-radius: 8px; padding: 15px; min-height: 54px; cursor: pointer; }
+button[disabled] { opacity: .55; cursor: default; }
+.msg { color: var(--err); min-height: 1.2em; font-weight: 600; }
+.done { display: grid; gap: 14px; text-align: center; padding: 30px 0; }
+.done .check { width: 64px; height: 64px; margin: 0 auto; border-radius: 50%; background: var(--ok); display: grid; place-items: center; }
+.done button { font: inherit; font-weight: 700; color: var(--ink); background: none; border: 1px solid var(--line); border-radius: 8px; padding: 13px; cursor: pointer; }
+.foot { font-size: 13px; color: var(--muted); }
+[hidden] { display: none !important; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <svg viewBox="0 0 40 40" aria-hidden="true"><path d="M20 2 38 20 20 38 2 20Z" fill="#ED1C24"/><path d="M20 10 30 20 20 30 10 20Z" fill="#000"/><path d="M20 15 25 20 20 25 15 20Z" fill="#BDBEC0"/></svg>
+    <div class="brand">DMND KUTZ <span>LICENSES</span></div>
+  </div>
+
+  <div id="formView">
+    <h1>Upload your license</h1>
+    <p class="lead">Takes a minute. No login needed. We'll remind the office before it expires so nobody gets caught working on an expired license.</p>
+  </div>
+
+  <form id="f" novalidate>
+    <div class="field">
+      <span class="lbl">This license is for</span>
+      <div class="seg" role="radiogroup">
+        <input type="radio" name="kind" id="k-barber" value="barber" checked><label for="k-barber">Me, the barber</label>
+        <input type="radio" name="kind" id="k-appr" value="apprentice"><label for="k-appr">Apprentice</label>
+        <input type="radio" name="kind" id="k-shop" value="shop"><label for="k-shop">The shop</label>
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="shop">Your shop</label>
+      <select id="shop" required>
+        <option value="">Choose your shop</option>
+        <option>Arcadia</option><option>Avondale</option><option>Buckeye</option><option>Cactus</option><option>Chandler</option>
+        <option>Laveen</option><option>Northern</option><option>Olive</option><option>Peoria</option><option>Phoenix</option>
+      </select>
+    </div>
+
+    <div class="field" id="nameField">
+      <label for="name">Your full name</label>
+      <input type="text" id="name" autocomplete="name" autocapitalize="words" maxlength="80" placeholder="As it's printed on your license">
+    </div>
+
+    <div class="field">
+      <label for="num" id="numLabel">License number</label>
+      <input type="text" id="num" maxlength="40" autocomplete="off" autocapitalize="characters" placeholder="From the license">
+    </div>
+
+    <div class="field">
+      <label for="exp" id="expLabel">Expiration date</label>
+      <input type="date" id="exp" required>
+    </div>
+
+    <div class="field">
+      <span class="lbl" id="photoLabel">Photo of the license</span>
+      <label class="pick" id="pick" for="file">
+        <input type="file" id="file" accept="image/*,application/pdf">
+        <img id="preview" alt="" hidden>
+        <b id="pickText">Take a photo or choose a file</b>
+        <span class="hint" id="pickHint">Lay it flat so the name, number and date are readable.</span>
+      </label>
+    </div>
+
+    <div class="msg" id="msg" role="alert"></div>
+    <button type="submit" id="send">Send license</button>
+    <p class="foot">Only DMND KUTZ management sees what you upload.</p>
+  </form>
+
+  <div class="done" id="done" hidden>
+    <div class="check"><svg width="34" height="34" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5 10 17.5 19 7" stroke="#0B0B0C" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    <h1 id="doneTitle">Got it</h1>
+    <p class="lead">Your license is in. You're all set until it's time to renew.</p>
+    <button type="button" id="again">Upload another license</button>
+  </div>
+</div>
+
+<script>
+const UPLOAD_URL = 'https://script.google.com/macros/s/AKfycbygDrCwDf3rgQb94l0vgK_EbBQYyqfgh74VkkGebwiKf7qWKpyRNHG53U9slnZFpw76AQ/exec';
+const $ = (id) => document.getElementById(id);
+let picked = null; // {data, mime}
+
+function kind() { return document.querySelector('input[name=kind]:checked').value; }
+function syncKind() {
+  const k = kind(), shop = k === 'shop', appr = k === 'apprentice';
+  $('nameField').hidden = shop;
+  $('shop').previousElementSibling.textContent = shop ? 'Which shop' : 'Your shop';
+  $('numLabel').textContent = appr ? 'Apprentice number' : 'License number';
+  $('num').placeholder = appr ? 'Your apprentice number' : 'From the license';
+  $('expLabel').textContent = appr ? 'Expected completion date' : 'Expiration date';
+  $('photoLabel').textContent = appr ? 'Photo of your apprentice paperwork (optional)' : 'Photo of the license';
+}
+document.querySelectorAll('input[name=kind]').forEach(r => r.addEventListener('change', syncKind));
+
+function toBase64(blob) {
+  return new Promise((res, rej) => { const r = new FileReader(); r.onload = () => res(String(r.result).split(',')[1]); r.onerror = rej; r.readAsDataURL(blob); });
+}
+function loadImage(file) {
+  return new Promise((res, rej) => { const url = URL.createObjectURL(file); const img = new Image(); img.onload = () => res({ img, url }); img.onerror = () => { URL.revokeObjectURL(url); rej(); }; img.src = url; });
+}
+async function shrink(file) {
+  // Phone photos are big; resize to 2000px JPEG so the upload is quick on cell data.
+  const { img, url } = await loadImage(file);
+  const scale = Math.min(1, 2000 / Math.max(img.naturalWidth, img.naturalHeight));
+  const c = document.createElement('canvas');
+  c.width = Math.round(img.naturalWidth * scale); c.height = Math.round(img.naturalHeight * scale);
+  c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+  const blob = await new Promise(r => c.toBlob(r, 'image/jpeg', 0.85));
+  return { blob, url };
+}
+
+$('file').addEventListener('change', async (e) => {
+  const file = e.target.files[0];
+  picked = null; $('msg').textContent = '';
+  $('preview').hidden = true; $('pick').classList.remove('has');
+  if (!file) return;
+  $('pickText').textContent = 'Getting the file ready…';
+  try {
+    if (file.type === 'application/pdf') {
+      picked = { data: await toBase64(file), mime: 'application/pdf' };
+      $('pickText').textContent = file.name;
+    } else {
+      try {
+        const { blob, url } = await shrink(file);
+        picked = { data: await toBase64(blob), mime: 'image/jpeg' };
+        $('preview').src = url; $('preview').hidden = false;
+      } catch (_) {
+        const t = (file.type || '').toLowerCase();
+        if (t !== 'image/heic' && t !== 'image/heif') throw new Error('type');
+        picked = { data: await toBase64(file), mime: t };
+      }
+      $('pickText').textContent = 'Photo added';
+    }
+    $('pick').classList.add('has');
+    $('pickHint').textContent = 'Tap to use a different one.';
+  } catch (_) {
+    $('pickText').textContent = 'Take a photo or choose a file';
+    $('msg').textContent = "That file didn't work. Take a photo of the license instead, or send it as a PDF.";
+  }
+});
+
+$('f').addEventListener('submit', (e) => {
+  e.preventDefault();
+  const k = kind();
+  const payload = { kind: k, shop: $('shop').value, name: $('name').value.trim(), licenseNumber: $('num').value.trim(), expires: $('exp').value };
+  const appr = k === 'apprentice';
+  const miss = !payload.shop ? 'Choose your shop.' : (k !== 'shop' && !payload.name) ? 'Enter your full name.' : (appr && !payload.licenseNumber) ? 'Enter your apprentice number.' : !payload.expires ? (appr ? 'Enter your expected completion date.' : 'Enter the expiration date from the license.') : (!picked && !appr) ? 'Add a photo of the license.' : '';
+  if (miss) { $('msg').textContent = miss; return; }
+  const [y] = payload.expires.split('-').map(Number);
+  if (y < 2020 || y > 2040) { $('msg').textContent = 'Check the expiration date. The year looks off.'; return; }
+  $('msg').textContent = '';
+  $('send').disabled = true; $('send').textContent = 'Sending…';
+  const done = () => {
+    const first = k !== 'shop' ? payload.name.split(/\s+/)[0] : '';
+    $('doneTitle').textContent = first ? 'Got it, ' + first : 'Got it';
+    $('f').hidden = true; $('formView').hidden = true; $('done').hidden = false;
+    window.scrollTo(0, 0);
+  };
+  const fail = (text) => {
+    $('msg').textContent = text || "That didn't send. Check your signal and try again.";
+    $('send').disabled = false; $('send').textContent = 'Send license';
+  };
+  // Sends to the same Google script as before; it saves the photo to Drive and adds the row to the upload sheet.
+  fetch(UPLOAD_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(Object.assign({ action: 'submit' }, payload, picked || {})) })
+    .then(r => r.json())
+    .then(res => res && res.ok ? done() : fail(res && res.error))
+    .catch(() => fail());
+});
+
+$('again').addEventListener('click', () => {
+  $('f').reset(); picked = null; syncKind();
+  $('preview').hidden = true; $('pick').classList.remove('has');
+  $('pickText').textContent = 'Take a photo or choose a file';
+  $('pickHint').textContent = "Lay it flat so the name, number and date are readable.";
+  $('send').disabled = false; $('send').textContent = 'Send license';
+  $('done').hidden = true; $('f').hidden = false; $('formView').hidden = false;
+});
+</script>
+</body>
+</html>
